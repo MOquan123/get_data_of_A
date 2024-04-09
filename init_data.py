@@ -6,6 +6,8 @@ from datetime import datetime, timedelta
 from get_data.get_daily_data import get_daily_data
 from get_data.get_weekly_data import get_weekly_data 
 from get_data.get_monthly_data import get_monthly_data 
+from get_data.get_index_daily_data import get_index_daily_data 
+
 
 
 def init_data():
@@ -31,7 +33,7 @@ def init_data():
     processed_dict = {}
 
     for code, name in code_name_dict.items():
-        if "*ST" in name or "ST" in name:
+        if "*ST" in name or "ST" in name or "退市" in name:
             continue  # skip special treatment (ST) stocks
         if code.startswith(('sh', 'sz')):   # modified
             continue
@@ -49,10 +51,9 @@ def init_data():
         print(f'processed_dict is empty.')
 
             
-    get_daily_data(processed_dict, 60)
-    get_weekly_data(processed_dict, 60)
-    get_monthly_data(processed_dict, 60)
-
+    get_daily_data(processed_dict, 180)
+    # get_weekly_data(processed_dict, 60)
+    # get_monthly_data(processed_dict, 60)
+    # get_index_daily_data('sh.000001', '上证指数',60)
+    print(f'have been getting A nums is ' + str(len(processed_dict)))
     bs.logout()
-
-    print(f'have been getting A nums is ' + len(processed_dict))
