@@ -22,13 +22,13 @@ def search_stocks_by_volume(path,num_data=11):
             continue
         
         # Calculate the highest price of past 30 trading days
-        df['highest_past_30_days'] = df['high'].rolling(window=num_data).max().shift(1)
-
+        # df['highest_past_30_days'] = df['high'].rolling(window=num_data).max().shift(1)
+        df['highest_past_30_days'] = df['high'].shift(num_data)
         # Check if the price drop is within 40%
         df['price_drop_within_40_percent'] = df['close'] < 0.66 * df['highest_past_30_days']
 
         # Get the volume of 10 days ago
-        df['volume_10_days_ago'] = df['volume'].shift(11)
+        df['volume_10_days_ago'] = df['volume'].shift(num_data)
 
         # Find the dates where the volume is 75% less than the volume of 10 trading days ago
         # and the price drop is within 40%
@@ -46,7 +46,7 @@ def analyze_target_stocks(target_stocks, path):
     num_positive_diffs = 0  # 满足条件的股票数量
     total_diffs = 0  # 总的股票数量（处于target_stocks中的）
     
-    num = 7
+    num = 8
     for file, dates in target_stocks:
         df = pd.read_csv(os.path.join(path, file))
         df['date'] = pd.to_datetime(df['date'])
@@ -71,7 +71,7 @@ def analyze_target_stocks(target_stocks, path):
     else:
         print("No valid data for calculation.")
 
-target_stocks = search_stocks_by_volume('output/d_data/')
+target_stocks = search_stocks_by_volume('output/d_data/',11)
 analyze_target_stocks(target_stocks, 'output/d_data/')
 
 
