@@ -51,7 +51,7 @@ def init_data():
         print(f'processed_dict is empty.')
 
             
-    get_daily_data(processed_dict, 180)
+    get_daily_data(processed_dict, 780)
     # get_weekly_data(processed_dict, 60)
     # get_monthly_data(processed_dict, 60)
     # get_index_daily_data('sh.000001', '上证指数',60)
