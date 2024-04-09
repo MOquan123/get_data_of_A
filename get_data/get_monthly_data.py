@@ -2,10 +2,11 @@ import pandas as pd
 import os
 import baostock as bs
 from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 
-def get_monthly_data(code_name_dict, period=12):
+def get_monthly_data(code_name_dict, period=48):
     # Determine the start and end date based on the period
-    start_date = (datetime.today() - timedelta(months=period)).strftime('%Y-%m-%d')
+    start_date = (datetime.today() - relativedelta(months=period)).strftime('%Y-%m-%d')
     end_date = datetime.today().strftime('%Y-%m-%d')
     
     data_folder = 'output/m_data'
